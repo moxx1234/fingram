@@ -1,5 +1,4 @@
 import React from "react";
-
 import Budget from "../../components/budget";
 
 const Main = () => {

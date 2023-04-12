@@ -64,12 +64,6 @@ body {
   padding: 0 10px;
 }
 
-svg * {
-  stroke: var(--font-color);
-
-  transition: 0.2s linear;
-}
-
 //======================= Header =======================
 header {
   background-color: var(--bg-block);
@@ -85,6 +79,12 @@ header {
     &:hover {
       color: $blue;
     }
+  }
+
+  svg * {
+    stroke: var(--font-color);
+
+    transition: color 0.2s linear;
   }
 }
 
@@ -138,18 +138,19 @@ header {
   // .stats__mini
   &__mini {
     display: flex;
-    justify-content: space-between;
 
-    margin: 0 0 80px;
+    margin: 0 -30px 80px;
+  }
+
+  &__column {
+    flex: 0 1 33.3%;
+
+    padding: 0 30px;
   }
 
   // .stats__item
   &__item {
-    min-width: 30%;
-
-    &:last-child {
-      margin: 0;
-    }
+    min-height: 245px;
   }
 
   // .stats__detailed
@@ -160,6 +161,9 @@ header {
 .recent-stats {
   padding: 20px 30px;
   @include block(var(--bg-block), 30px, var(--shadow), none);
+
+  display: flex;
+  flex-direction: column;
 
   // .recent-stats__label
   &__label {
@@ -180,13 +184,13 @@ header {
   &__content {
     position: relative;
 
-    margin: 0 0 40px;
+    flex: 1 0 auto;
 
     &::after {
       content: "...";
 
       position: absolute;
-      bottom: -20px;
+      bottom: 19px;
       right: 0;
     }
   }
@@ -194,7 +198,8 @@ header {
   // .recent-stats__row
   &__row {
     display: grid;
-    grid-template-columns: 1fr 1fr auto;
+    grid-template-columns: 1fr 1fr 90px;
+    column-gap: 8px;
 
     align-items: end;
 
@@ -227,6 +232,12 @@ header {
     display: flex;
     justify-content: space-between;
   }
+
+  svg * {
+    stroke: var(--font-color);
+
+    transition: 0.2s linear;
+  }
 }
 
 .period-stats {
@@ -249,6 +260,7 @@ header {
 
     button {
       background-color: rgba(0, 0, 0, 0);
+      transition: all 0.3s ease;
     }
     svg,
     select {
@@ -308,10 +320,9 @@ header {
     padding: 15px 30px;
   }
 
-  // .period-stats__diagram
-  &__diagram {
+  // .period-stats__chart
+  &__chart {
     width: 200px;
-    height: 200px;
   }
 
   // .period-stats__period-info
@@ -329,17 +340,18 @@ header {
     margin: 0 0 15px;
   }
 }
+
 .period-info {
   // .period-info__title
   &__title {
+    margin: 0 0 15px;
+
     font-size: 1.25rem;
     font-weight: 500;
   }
 
   // .period-info__list
   &__list {
-    padding: 30px 0;
-
     display: grid;
     grid-template-rows: repeat(6, 1fr);
     grid-auto-flow: column;
