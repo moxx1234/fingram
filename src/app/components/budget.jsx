@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import TransactionStats from "./transactionStats";
-import budgetApi from "../../api/budgetApi";
 import AccountStats from "./accountStats";
 import PeriodStats from "./periodStats";
+import budgetAPI from "../../api/budgetApi";
 
 const Budget = () => {
-  const getTotalSum = (budgetType) =>
-    budgetType.reduce(
-      (total, transaction) => (total += transaction.sum || transaction.balance),
-      0
+  const getTypeTransactions = (type) => {
+    return budgetAPI.transactions.filter(
+      (transaction) => transaction.type === type
     );
+  };
   const formatSum = (sum) => {
     if (sum.toString().length <= 3) {
       return sum;
@@ -18,34 +18,31 @@ const Budget = () => {
     }
   };
 
-  const [periodIncome, setPeriodIncome] = useState(
-    getTotalSum(budgetApi.income)
-  );
-  const [periodExpense, setPeriodExpense] = useState(
-    getTotalSum(budgetApi.expense)
-  );
-  const [accountTotal, setAccountTotal] = useState(
-    getTotalSum(budgetApi.accounts)
-  );
-
   return (
     <>
       <div className="stats__mini">
-        <TransactionStats
-          type="income"
-          total={periodIncome}
-          format={formatSum}
-        />
+        <div className="stats__column">
+          <TransactionStats
+            type="income"
+            format={formatSum}
+            data={getTypeTransactions("income")}
+          />
+        </div>
 
-        <AccountStats total={accountTotal} format={formatSum} />
+        <div className="stats__column">
+          <AccountStats format={formatSum} data={budgetAPI.accounts} />
+        </div>
 
-        <TransactionStats
-          type="expense"
-          total={periodExpense}
-          format={formatSum}
-   />
+        <div className="stats__column">
+          <TransactionStats
+            type="expense"
+            format={formatSum}
+            data={getTypeTransactions("expense")}
+          />
+        </div>
       </div>
-      <PeriodStats />
+
+      <PeriodStats getData={getTypeTransactions} />
     </>
   );
 };
