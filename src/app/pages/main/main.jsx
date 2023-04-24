@@ -1,5 +1,5 @@
 import React from "react";
-import Budget from "../../components/budget";
+import Budget from "../../components/main/budget";
 
 const Main = () => {
   return (

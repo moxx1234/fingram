@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Icons from "../assets/img/svg/icons";
+import Icons from "../../assets/img/svg/icons";
 import Piechart from "./piechart";
 
 const colors = [
@@ -18,15 +18,17 @@ const colors = [
 const PeriodStats = ({ getData }) => {
   const [mainType, setMainType] = useState("income");
 
+  const transactions = getData(mainType);
+  console.log(transactions);
+
   const handleTypeChange = (type) => {
     return function (e) {
       e.preventDefault();
       setMainType(type);
     };
   };
-
-  const transactions = getData(mainType);
   const formatData = (inputData) => {
+    //format data to [{name: categoryName, value: categoryTotal}]
     const data = [];
     const res = {};
     inputData.forEach((transaction) => {
@@ -39,7 +41,14 @@ const PeriodStats = ({ getData }) => {
     for (let i = 0; i < names.length; i++) {
       data[i] = { name: names[i], value: values[i] };
     }
+    console.log(data);
     return data;
+  };
+
+  const getCategoryTotal = (category) => {
+    return transactions.filter(
+      (transaction) => transaction.category === category
+    );
   };
 
   return (
@@ -76,19 +85,25 @@ const PeriodStats = ({ getData }) => {
 
       <div className="period-stats__content">
         <div className="period-stats__chart">
-          <Piechart data={formatData(transactions)} colors={colors} />
+          {transactions && (
+            <Piechart data={formatData(transactions)} colors={colors} />
+          )}
         </div>
         <div className="period-stats__period-info period-info">
           <h2 className="period-info__title">Прошлый период:</h2>
-          <ul className="period-info__list">
-            <li className="period-info__item">30,000</li>
-            <li className="period-info__item">30,000</li>
-            <li className="period-info__item">30,000</li>
-            <li className="period-info__item">30,000</li>
-            <li className="period-info__item">30,000</li>
-            <li className="period-info__item">30,000</li>
-            <li className="period-info__item">30,000</li>
-          </ul>
+          {transactions ? (
+            <ul className="period-info__list">
+              <li className="period-info__item">30,000</li>
+              <li className="period-info__item">30,000</li>
+              <li className="period-info__item">30,000</li>
+              <li className="period-info__item">30,000</li>
+              <li className="period-info__item">30,000</li>
+              <li className="period-info__item">30,000</li>
+              <li className="period-info__item">30,000</li>
+            </ul>
+          ) : (
+            <p>Загрузка...</p>
+          )}
         </div>
         <div className="period-stats__period-info period-info">
           <h2 className="period-info__title">Текущий период:</h2>
