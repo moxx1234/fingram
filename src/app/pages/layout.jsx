@@ -19,31 +19,43 @@ const Layout = () => {
     <>
       <header>
         <div className="container">
-          <nav>
-            <ul className="menu">
-              <div className="menu__item-box menu__item-box_left">
-                <li className="menu__item">
-                  <NavLink to="/">Главная</NavLink>
-                </li>
-                <li className="menu__item">
-                  <NavLink to="/history">История</NavLink>
-                </li>
-              </div>
-              <div className="menu__item-box menu__item-box_right">
-                <li className="menu__item" onClick={() => toggleTheme(theme)}>
-                  {theme === "light" ? Icons().moon : Icons().sun}
-                </li>
-                <li className="menu__item">
-                  <NavLink to="/user">
-                    Username
-                    <UserSvg theme={theme} />
-                  </NavLink>
-                </li>
-              </div>
-            </ul>
+          <nav className="menu">
+            <div className="menu__item-box menu__item-box_left">
+              <NavLink
+                to="/"
+                className={(navData) =>
+                  navData.isActive ? "menu__item active" : "menu__item"
+                }
+              >
+                Главная
+              </NavLink>
+              <NavLink
+                to="/history"
+                className={(navData) =>
+                  navData.isActive ? "menu__item active" : "menu__item"
+                }
+              >
+                История
+              </NavLink>
+            </div>
+            <div className="menu__item-box menu__item-box_right">
+              <button onClick={() => toggleTheme(theme)}>
+                {theme === "light" ? Icons().moon : Icons().sun}
+              </button>
+              <NavLink
+                to="/user"
+                className={(navData) =>
+                  navData.isActive ? "menu__item active" : "menu__item"
+                }
+              >
+                Username
+                <UserSvg theme={theme} />
+              </NavLink>
+            </div>
           </nav>
         </div>
       </header>
+
       <main className="container">
         <Outlet />
       </main>

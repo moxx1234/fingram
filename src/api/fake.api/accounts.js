@@ -1,30 +1,54 @@
 import { transactions } from "./transactions";
+import { v4 as uuidv4 } from "uuid";
 
-const fetchAll = () => {
-  new Promise((resolve) => window.setTimeout(() => resolve(accountsObject)));
+const accs = [
+	{
+		name: "Наличные",
+		balance: 9000,
+		id: uuidv4(),
+	},
+	{
+		name: "Депозит",
+		balance: 0,
+		id: uuidv4(),
+	},
+	{
+		name: "Крипта",
+		balance: 80600,
+		id: uuidv4(),
+	},
+	{
+		name: "Сбербанк",
+		balance: 7000,
+		id: uuidv4(),
+	},
+];
+
+const updateBalance = (accName) => {
+	accs.find((account) => account.name === accName).balance = transactions
+		.filter((transaction) => transaction.account === accName)
+		.reduce((total, transaction) => (total += transaction.sum), 0);
 };
 
-const accounts = (inputData) => {
-  const data = [];
-  const res = {};
-  inputData.forEach((transaction) => {
-    if (transaction.type === "income") {
-      res[transaction.account]
-        ? (res[transaction.account] += transaction.sum)
-        : (res[transaction.account] = transaction.sum);
-    } else {
-      res[transaction.account]
-        ? (res[transaction.account] -= transaction.sum)
-        : (res[transaction.account] = transaction.sum);
-    }
-  });
-  const names = Object.keys(res);
-  const values = Object.values(res);
-  for (let i = 0; i < names.length; i++) {
-    data[i] = { name: names[i], balance: values[i], id: i + 1 };
-  }
-  return data;
+const deleteAcc = (id) => {
+	const searchedIndex = accs.findIndex((account) => account.id === id);
+	accs.splice(searchedIndex, 1);
 };
 
-export const accountsObject = accounts(transactions);
-export default fetchAll;
+const addAcc = (account) => {
+	accs.unshift(account);
+};
+
+const fetchAll = () =>
+	new Promise((resolve) => {
+		setTimeout(() => {
+			resolve(accs);
+		}, 500);
+	});
+
+export default {
+	addAcc,
+	deleteAcc,
+	updateBalance,
+	fetchAll,
+};

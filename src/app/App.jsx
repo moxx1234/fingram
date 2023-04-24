@@ -1,11 +1,10 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Layout from "./pages/layout";
-
 import Main from "./pages/main/main";
 import History from "./pages/history/history";
 import Transaction from "./pages/transaction/transaction";
-import User from "./pages/user/user";
+import UserPage from "./pages/user/userPage";
 
 const App = () => {
   return (
@@ -15,7 +14,7 @@ const App = () => {
           <Route index element={<Main />}></Route>
           <Route path="history" element={<History />} />
           <Route path="transaction" element={<Transaction />} />
-          <Route path="user" element={<User />} />
+          <Route path="user/*" element={<UserPage />} />
         </Route>
       </Routes>
     </>
