@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from "react"
 
 const usePagination = (itemsOnPage, data, extraItem = false) => {
 	const [currentPage, setCurrentPage] = useState(1)
@@ -8,6 +8,11 @@ const usePagination = (itemsOnPage, data, extraItem = false) => {
 	const lastIndex = currentPage * itemsCount
 	const renderedItems = data.slice(firstIndex, lastIndex)
 	const totalPages = Math.ceil(data.length / itemsCount)
+
+	if (renderedItems.length < 1) {
+		setCurrentPage(totalPages)
+	}
+
 	return {
 		currentPage,
 		renderedItems,
@@ -15,7 +20,7 @@ const usePagination = (itemsOnPage, data, extraItem = false) => {
 			setCurrentPage(pageNum)
 		},
 		totalPages,
-	};
+	}
 }
 
-export default usePagination;
+export default usePagination
