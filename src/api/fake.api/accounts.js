@@ -1,7 +1,7 @@
 import { transactions } from "./transactions";
 import { v4 as uuidv4 } from "uuid";
 
-const accs = [
+const accounts = [
 	{
 		name: "Наличные",
 		balance: 9000,
@@ -25,24 +25,43 @@ const accs = [
 ];
 
 const updateBalance = (accName) => {
-	accs.find((account) => account.name === accName).balance = transactions
+	accounts.find((account) => account.name === accName).balance = transactions
 		.filter((transaction) => transaction.account === accName)
 		.reduce((total, transaction) => (total += transaction.sum), 0);
 };
 
 const deleteAcc = (id) => {
-	const searchedIndex = accs.findIndex((account) => account.id === id);
-	accs.splice(searchedIndex, 1);
+	const searchedIndex = accounts.findIndex((account) => account.id === id);
+	accounts.splice(searchedIndex, 1);
 };
 
-const addAcc = (account) => {
-	accs.unshift(account);
+const addAcc = (element) => {
+	let doesExist = false;
+
+	const { id, ...newInfo } = element;
+	const newContent = { ...newInfo };
+
+	accounts.forEach((account) => {
+		const { id, ...oldInfo } = account;
+		const oldContent = { ...oldInfo };
+		if (JSON.stringify(oldContent) === JSON.stringify(newContent)) {
+			doesExist = true;
+		}
+	});
+
+	if (!doesExist) {
+		accounts.unshift(element);
+	}
 };
+
+const getTotalBalance = () => {
+	return accounts.reduce((total, account) => total += account.balance, 0)
+}
 
 const fetchAll = () =>
 	new Promise((resolve) => {
 		setTimeout(() => {
-			resolve(accs);
+			resolve(accounts);
 		}, 500);
 	});
 
@@ -51,4 +70,5 @@ export default {
 	deleteAcc,
 	updateBalance,
 	fetchAll,
+	getTotalBalance,
 };

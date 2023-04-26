@@ -91,6 +91,43 @@ body {
 	}
 }
 
+.text-input {
+	padding: 10px;
+
+	background-color: var(--bg-body);
+
+	border-radius: 10px;
+	border: 1px solid $blue;
+
+	font-size: inherit;
+	font-weight: inherit;
+	color: inherit;
+
+	transition: box-shadow 0.2s linear;
+
+	&:focus {
+		box-shadow: var(--input-shadow);
+	}
+}
+
+.type-setter {
+	background-color: $blue;
+
+	overflow: hidden;
+
+	button {
+		color: #ffffff;
+
+		background-color: rgba(0, 0, 0, 0);
+
+		transition: all 0.3s ease;
+
+		&.active {
+			box-shadow: $btn-hover;
+		}
+	}
+}
+
 //======================= Header =======================
 header {
 	background-color: var(--bg-block);
@@ -308,16 +345,13 @@ header {
 		}
 	}
 
-	// .period-stats__tab
-	&__tab {
-		font-size: 1.375rem;
-		font-weight: 500;
-		color: inherit;
+	// .period-stats__type-setter
+	&__type-setter {
+		button {
+			padding: 12px 25px;
 
-		padding: 12px 25px;
-
-		&.active {
-			box-shadow: $btn-hover;
+			font-size: 1.375rem;
+			font-weight: 500;
 		}
 	}
 
@@ -421,6 +455,14 @@ header {
 
 		display: flex;
 		flex-direction: column;
+
+		&.income {
+			border: 1px solid $green;
+		}
+
+		&.expense {
+			border: 1px solid $red;
+		}
 	}
 
 	// .user__navigation
@@ -448,11 +490,27 @@ header {
 
 			text-align: center;
 
+			transition: 0.3s ease;
+
 			&.active {
 				box-shadow: $btn-hover;
 
 				max-width: 100%;
 			}
+		}
+	}
+
+	// .user__type-setter
+	&__type-setter {
+		margin: 0 auto 25px;
+
+		border-radius: 10px;
+
+		button {
+			padding: 7px 45px;
+
+			font-size: 1.125rem;
+			font-weight: 600;
 		}
 	}
 
@@ -466,7 +524,9 @@ header {
 	}
 
 	// .user__form
-	&__form {}
+	&__form {
+		flex: 1 0 auto;
+	}
 
 	// .user__pagination
 	&__pagination {
@@ -512,13 +572,13 @@ header {
 		}
 	}
 
-	// .user__accounts
-	&__accounts {
+	// .user__list
+	&__list {
 		flex: 1 0 auto;
 	}
 
-	// .user__accounts-item
-	&__accounts-item {
+	// .user__list-item
+	&__list-item {
 		margin: 0 0 20px;
 	}
 
@@ -559,23 +619,7 @@ header {
 		input {
 			flex: 1 0 auto;
 
-			padding: 10px;
 			margin: 0 28px 0 0;
-
-			background-color: var(--bg-body);
-
-			border-radius: 10px;
-			border: 1px solid $blue;
-
-			font-size: inherit;
-			font-weight: inherit;
-			color: inherit;
-
-			transition: box-shadow 0.2s linear;
-
-			&:focus {
-				box-shadow: var(--input-shadow);
-			}
 		}
 	}
 
@@ -596,7 +640,7 @@ header {
 	}
 }
 
-.accounts-item {
+.list-item {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -607,21 +651,35 @@ header {
 	border: 1px solid $blue;
 
 	font-weight: 500;
-	font-size: 22px;
+	font-size: 1.375rem;
 
-	// .accounts-item__label
-	&__label {
+	// .list-item__left
+	&__left {
 		flex-basis: 215px;
 
 		margin: 0 50px 0 0;
 	}
 
-	// .accounts-item__sum
-	&__sum {
+	// .list-item__middle
+	&__middle {
 		flex: 1 0 auto;
+
+		&_gray {
+			color: $light-grey;
+			font-size: 1.125rem;
+		}
 	}
 
 	button {
 		background-color: rgba(0, 0, 0, 0);
+	}
+}
+
+.list-input {
+	&__input-field {
+		margin: 0 15px 0 0;
+		padding: 5px 10px;
+
+		width: 250px;
 	}
 }
